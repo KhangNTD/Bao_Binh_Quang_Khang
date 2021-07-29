@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../respositories/user_repositories.dart';
+import '../blocs/login_bloc.dart';
+import '../blocs/login_event.dart';
+import '../blocs/login_state.dart';
 import '../widgets/responsive.dart';
 import '../widgets/logo.dart';
 import '../constants/constants_text.dart';
 
 class LoginScreen extends StatelessWidget {
+  final User user = User();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final double spaceBetweenItems = 30;
   final double spaceBetweenTexts = 15;
   final double smallTextSize = 14;
@@ -74,27 +82,34 @@ class LoginScreen extends StatelessWidget {
                           color: Color(0xffA8A8A8),
                           fontSize: smallTextSize),
                     ),
-                    TextField(
-                      keyboardType: TextInputType.emailAddress,
-                      autofocus: true,
-                      cursorColor: Color(0xff30BE76),
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(
-                            top: spaceBetweenTexts,
-                            bottom: spaceBetweenTexts / 3),
-                        isDense: true,
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0xff30BE76),
-                            width: 2,
-                          ),
-                        ),
-                      ),
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          fontFamily: AppConstants.fontBasic,
-                          color: Color(0xff030F09),
-                          fontSize: mediumTextSize),
-                    ),
+                    BlocBuilder<LoginBloc, LoginState>(
+                        builder: (context, state) => TextField(
+                              controller: _emailController,
+                              keyboardType: TextInputType.emailAddress,
+                              autofocus: true,
+                              cursorColor: Color(0xff30BE76),
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(
+                                    top: spaceBetweenTexts,
+                                    bottom: spaceBetweenTexts / 3),
+                                isDense: true,
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0xff30BE76),
+                                    width: 2,
+                                  ),
+                                ),
+                                errorText:
+                                    setErrorText(context, 'email', state),
+                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(
+                                      fontFamily: AppConstants.fontBasic,
+                                      color: Color(0xff030F09),
+                                      fontSize: mediumTextSize),
+                            )),
                     SizedBox(
                       height: spaceBetweenItems,
                     ),
@@ -123,27 +138,31 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    TextField(
-                      obscureText: true,
-                      obscuringCharacter: '⬤',
-                      cursorColor: Color(0xff30BE76),
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(
-                            top: spaceBetweenTexts,
-                            bottom: spaceBetweenTexts / 3),
-                        isDense: true,
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0xff30BE76),
-                            width: 2,
+                    BlocBuilder<LoginBloc, LoginState>(
+                      builder: (context, state) => TextField(
+                        controller: _passwordController,
+                        obscureText: true,
+                        obscuringCharacter: '⬤',
+                        cursorColor: Color(0xff30BE76),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(
+                              top: spaceBetweenTexts,
+                              bottom: spaceBetweenTexts / 3),
+                          isDense: true,
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xff30BE76),
+                              width: 2,
+                            ),
                           ),
+                          errorText: setErrorText(context, 'pass', state),
                         ),
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            fontFamily: AppConstants.fontBasic,
+                            color: Color(0xff030F09),
+                            fontSize: mediumTextSize,
+                            letterSpacing: 1.5),
                       ),
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          fontFamily: AppConstants.fontBasic,
-                          color: Color(0xff030F09),
-                          fontSize: mediumTextSize,
-                          letterSpacing: 1.5),
                     ),
                     SizedBox(
                       height: spaceBetweenItems,
@@ -161,7 +180,9 @@ class LoginScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                           )),
                         ),
-                        onPressed: () => {},
+                        onPressed: () => context.read<LoginBloc>().add(
+                            LoginSubmitted(_emailController.text,
+                                _passwordController.text)),
                         child: Text(
                           LoginText.buttonLogin,
                           style:
@@ -287,30 +308,34 @@ class LoginScreen extends StatelessWidget {
                                   color: Color(0xffA8A8A8),
                                   fontSize: smallTextSize),
                         ),
-                        TextField(
-                          keyboardType: TextInputType.emailAddress,
-                          autofocus: true,
-                          cursorColor: Color(0xff30BE76),
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(
-                                top: spaceBetweenTexts,
-                                bottom: spaceBetweenTexts / 3),
-                            isDense: true,
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xff30BE76),
-                                width: 2,
-                              ),
-                            ),
-                          ),
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(
-                                  fontFamily: AppConstants.fontBasic,
-                                  color: Color(0xff030F09),
-                                  fontSize: mediumTextSize),
-                        ),
+                        BlocBuilder<LoginBloc, LoginState>(
+                            builder: (context, state) => TextField(
+                                  controller: _emailController,
+                                  keyboardType: TextInputType.emailAddress,
+                                  autofocus: true,
+                                  cursorColor: Color(0xff30BE76),
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.only(
+                                        top: spaceBetweenTexts,
+                                        bottom: spaceBetweenTexts / 3),
+                                    isDense: true,
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xff30BE76),
+                                        width: 2,
+                                      ),
+                                    ),
+                                    errorText:
+                                        setErrorText(context, 'email', state),
+                                  ),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .copyWith(
+                                          fontFamily: AppConstants.fontBasic,
+                                          color: Color(0xff030F09),
+                                          fontSize: mediumTextSize),
+                                )),
                         SizedBox(
                           height: spaceBetweenItems,
                         ),
@@ -339,28 +364,32 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        TextField(
-                          obscureText: true,
-                          obscuringCharacter: '●',
-                          cursorColor: Color(0xff30BE76),
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(
-                                top: spaceBetweenTexts,
-                                bottom: spaceBetweenTexts / 3),
-                            isDense: true,
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xff30BE76),
-                                width: 2,
+                        BlocBuilder<LoginBloc, LoginState>(
+                          builder: (context, state) => TextField(
+                            controller: _passwordController,
+                            obscureText: true,
+                            obscuringCharacter: '●',
+                            cursorColor: Color(0xff30BE76),
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(
+                                  top: spaceBetweenTexts,
+                                  bottom: spaceBetweenTexts / 3),
+                              isDense: true,
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xff30BE76),
+                                  width: 2,
+                                ),
                               ),
+                              errorText: setErrorText(context, 'pass', state),
                             ),
+                            style:
+                                Theme.of(context).textTheme.bodyText1!.copyWith(
+                                      fontFamily: AppConstants.fontBasic,
+                                      color: Color(0xff030F09),
+                                      fontSize: mediumTextSize,
+                                    ),
                           ),
-                          style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
-                                    fontFamily: AppConstants.fontBasic,
-                                    color: Color(0xff030F09),
-                                    fontSize: mediumTextSize,
-                                  ),
                         ),
                         SizedBox(
                           height: spaceBetweenItems,
@@ -439,5 +468,22 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String? setErrorText(context, field, state) {
+    if (state is LoginSubmitFailure) {
+      if (!state.password && field == 'pass') {
+        return 'Password should have more than 8 characters,\nincluding number, lower and upper character,\nand special symbol.';
+      }
+      if (field == 'email' && !state.email) {
+        return 'Invalid email!';
+      }
+    }
+    if (state is LoginSubmitSuccess) {
+      user
+          .signIn(state.email, state.password)
+          .then((value) => {Navigator.of(context).pushNamed('/home')});
+    }
+    return null;
   }
 }
