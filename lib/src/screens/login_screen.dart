@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../respositories/user_repositories.dart';
-import '../blocs/login_bloc.dart';
-import '../blocs/login_event.dart';
-import '../blocs/login_state.dart';
+import '../blocs/user_bloc.dart';
+import '../blocs/user_event.dart';
+import '../blocs/user_state.dart';
 import '../widgets/responsive.dart';
 import '../widgets/logo.dart';
 import '../constants/constants_text.dart';
 
 class LoginScreen extends StatelessWidget {
-  final User user = User();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final double spaceBetweenItems = 30;
@@ -18,6 +16,8 @@ class LoginScreen extends StatelessWidget {
   final double smallTextSize = 14;
   final double mediumTextSize = 16;
   final double titleTextSize = 24;
+  bool isValidEmail = false;
+  bool isValidPassword = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,11 +82,14 @@ class LoginScreen extends StatelessWidget {
                           color: Color(0xffA8A8A8),
                           fontSize: smallTextSize),
                     ),
-                    BlocBuilder<LoginBloc, LoginState>(
+                    BlocBuilder<UserBloc, UserState>(
                         builder: (context, state) => TextField(
                               controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
                               autofocus: true,
+                              onSubmitted: (email) => context
+                                  .read<UserBloc>()
+                                  .add(UserEmailSubmitted(email)),
                               cursorColor: Color(0xff30BE76),
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.only(
@@ -99,8 +102,7 @@ class LoginScreen extends StatelessWidget {
                                     width: 2,
                                   ),
                                 ),
-                                errorText:
-                                    setErrorText(context, 'email', state),
+                                errorText: setErrorText(state, 'mail'),
                               ),
                               style: Theme.of(context)
                                   .textTheme
@@ -138,11 +140,14 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    BlocBuilder<LoginBloc, LoginState>(
+                    BlocBuilder<UserBloc, UserState>(
                       builder: (context, state) => TextField(
                         controller: _passwordController,
                         obscureText: true,
                         obscuringCharacter: '⬤',
+                        onSubmitted: (value) => context
+                            .read<UserBloc>()
+                            .add(UserPasswordSubmitted(value)),
                         cursorColor: Color(0xff30BE76),
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(
@@ -155,7 +160,7 @@ class LoginScreen extends StatelessWidget {
                               width: 2,
                             ),
                           ),
-                          errorText: setErrorText(context, 'pass', state),
+                          errorText: setErrorText(state, 'pass'),
                         ),
                         style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             fontFamily: AppConstants.fontBasic,
@@ -180,9 +185,7 @@ class LoginScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                           )),
                         ),
-                        onPressed: () => context.read<LoginBloc>().add(
-                            LoginSubmitted(_emailController.text,
-                                _passwordController.text)),
+                        onPressed: () => logIn(context),
                         child: Text(
                           LoginText.buttonLogin,
                           style:
@@ -308,7 +311,7 @@ class LoginScreen extends StatelessWidget {
                                   color: Color(0xffA8A8A8),
                                   fontSize: smallTextSize),
                         ),
-                        BlocBuilder<LoginBloc, LoginState>(
+                        BlocBuilder<UserBloc, UserState>(
                             builder: (context, state) => TextField(
                                   controller: _emailController,
                                   keyboardType: TextInputType.emailAddress,
@@ -325,8 +328,7 @@ class LoginScreen extends StatelessWidget {
                                         width: 2,
                                       ),
                                     ),
-                                    errorText:
-                                        setErrorText(context, 'email', state),
+                                    errorText: setErrorText(state, 'mail'),
                                   ),
                                   style: Theme.of(context)
                                       .textTheme
@@ -364,7 +366,7 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        BlocBuilder<LoginBloc, LoginState>(
+                        BlocBuilder<UserBloc, UserState>(
                           builder: (context, state) => TextField(
                             controller: _passwordController,
                             obscureText: true,
@@ -381,7 +383,7 @@ class LoginScreen extends StatelessWidget {
                                   width: 2,
                                 ),
                               ),
-                              errorText: setErrorText(context, 'pass', state),
+                              errorText: setErrorText(state, 'pass'),
                             ),
                             style:
                                 Theme.of(context).textTheme.bodyText1!.copyWith(
@@ -470,20 +472,30 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  String? setErrorText(context, field, state) {
-    if (state is LoginSubmitFailure) {
-      if (!state.password && field == 'pass') {
-        return 'Password should have more than 8 characters,\nincluding number, lower and upper character,\nand special symbol.';
-      }
-      if (field == 'email' && !state.email) {
-        return 'Invalid email!';
-      }
-    }
-    if (state is LoginSubmitSuccess) {
-      user
-          .signIn(state.email, state.password)
-          .then((value) => {Navigator.of(context).pushNamed('/home')});
+  String? setErrorText(state, field) {
+    if (state is UserEmailSubmitFailure && field == 'mail') {
+      isValidEmail = false;
+      return 'Invalid email';
+    } else if (state is UserPasswordSubmitFailure && field == 'pass') {
+      isValidPassword = false;
+      return 'Password should have more than 8 characters,\nincluding number, lower and upper character,\nand special symbol.';
+    } else if (state is UserEmailSubmitSuccess) {
+      isValidEmail = true;
+    } else if (state is UserPasswordSubmitSuccess) {
+      isValidPassword = true;
+    } else if (state is UserLoginFailure) {
+      return state.exception;
     }
     return null;
+  }
+
+  void logIn(BuildContext context) {
+    if (isValidEmail &&
+        isValidPassword &&
+        _emailController.text.isNotEmpty &&
+        _passwordController.text.isNotEmpty) {
+      context.read<UserBloc>().add(UserLoginButtonSubmitted(
+          _emailController.text, _passwordController.text));
+    }
   }
 }
