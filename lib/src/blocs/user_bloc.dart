@@ -38,7 +38,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
               email: event.email, password: event.password);
           yield UserLoginSuccess();
         } on FirebaseAuthException catch (exception) {
-          yield UserLoginFailure(exception.toString());
+          yield UserLoginFailure(exception);
         }
         break;
     }

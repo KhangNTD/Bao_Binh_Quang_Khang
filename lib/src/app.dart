@@ -19,6 +19,7 @@ class App extends StatelessWidget {
               child: LoginScreen(),
             ),
         '/home': (context) => HomeScreen(),
+        '/signup': (context) => HomeScreen(),
       },
     );
   }

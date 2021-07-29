@@ -36,6 +36,11 @@ class LoginText {
   static const String buttonLogin = "Login";
   static const String subTitleSignUp = "New to Scratch?";
   static const String buttonSignUp = "Create Account Here";
+  static const String invalidEmail = 'Invalid email';
+  static const String invalidPassword =
+      'Password should have more than 8 characters,\nincluding number, lower and upper character,\nand special symbol.';
+  static const String accountNotFound = 'Account does not exist';
+  static const String incorrectPassword = 'Incorrect password';
 }
 
 class AppConstants {

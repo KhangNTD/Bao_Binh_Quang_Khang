@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class UserState extends Equatable {
   @override
@@ -41,7 +42,7 @@ class UserLoginSuccess extends UserState {
 }
 
 class UserLoginFailure extends UserState {
-  final String exception;
+  final FirebaseAuthException exception;
   UserLoginFailure(this.exception);
   @override
   List<Object> get props => [exception];
