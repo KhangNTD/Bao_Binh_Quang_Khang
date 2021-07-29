@@ -1,10 +1,11 @@
-import 'dart:math';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_app/src/constants/constants_color.dart';
-import 'package:mobile_app/src/utils/validator.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile_app/src/blocs/users_bloc.dart';
+import 'package:mobile_app/src/repositories/user_repositories.dart';
 
+import '../constants/constants_color.dart';
+import '../utils/validator.dart';
 import '../widgets/logo.dart';
 import '../constants/constants_text.dart';
 import '../widgets/responsive.dart';
@@ -108,8 +109,7 @@ class BoxResetPassword extends StatefulWidget {
 
 class _BoxResetPasswordState extends State<BoxResetPassword> {
   final _email = TextEditingController();
-  final auth = FirebaseAuth.instance;
-
+  final UserRepository _user = UserRepository();
   @override
   void dispose() {
     _email.dispose();
@@ -171,28 +171,36 @@ class _BoxResetPasswordState extends State<BoxResetPassword> {
                 color: ForgotPasswordColor.subTitleForgotColor,
                 fontSize: 15),
           ),
-          TextField(
-            controller: _email,
-            keyboardType: TextInputType.emailAddress,
-            autofocus: true,
-            cursorColor: ForgotPasswordColor.underLineColor,
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.only(top: 15, bottom: 5),
-              isDense: true,
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: ForgotPasswordColor.underLineColor,
-                  // color: checkColor(true) == true
-                  //     ? ForgotPasswordColor.underLineColor
-                  //     : Colors.red,
-                  width: 2,
+          BlocBuilder<UsersBloc, UsersState>(
+            builder: (context, state) {
+              return TextField(
+                controller: _email,
+                keyboardType: TextInputType.emailAddress,
+                autofocus: true,
+                onSubmitted: (_email) {
+                  context.read<UsersBloc>().add(SubmitEmail(_email));
+                },
+                cursorColor: ForgotPasswordColor.underLineColor,
+                decoration: InputDecoration(
+                  errorText: setErrText(context, state),
+                  contentPadding: EdgeInsets.only(top: 15, bottom: 5),
+                  isDense: true,
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: ForgotPasswordColor.underLineColor,
+                      // color: checkColor(true) == true
+                      //     ? ForgotPasswordColor.underLineColor
+                      //     : Colors.red,
+                      width: 2,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                fontFamily: AppConstants.fontRegular,
-                // color: ForgotPasswordColor.subTitleForgotColor,
-                fontSize: 16.5),
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    fontFamily: AppConstants.fontRegular,
+                    // color: ForgotPasswordColor.subTitleForgotColor,
+                    fontSize: 16.5),
+              );
+            },
           ),
           SizedBox(
             height: spacingButton,
@@ -204,7 +212,8 @@ class _BoxResetPasswordState extends State<BoxResetPassword> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8))),
               onPressed: () {
-                sendMess();
+                context.read<UsersBloc>().add(SubmitEmail(_email.text));
+                // sendMess();
                 // auth.sendPasswordResetEmail(email: _email.text);
               },
               child: Text(
@@ -219,13 +228,15 @@ class _BoxResetPasswordState extends State<BoxResetPassword> {
     );
   }
 
-  sendMess() {
-    final _isValidEmail = Validators.isValidEmail(_email.text);
-
-    if (_isValidEmail) {
-      auth
-          .sendPasswordResetEmail(email: _email.text)
+  setErrText(context, state) {
+    if (state is SubmitEmailFailure) {
+      return 'Email is not valid!';
+    }
+    if (state is SubmitEmailSuccess) {
+      _user
+          .resetPassword(_email.text)
           .whenComplete(() => Navigator.of(context).pushNamed('/login'));
-    } else {}
+      // print(getData);
+    }
   }
 }
