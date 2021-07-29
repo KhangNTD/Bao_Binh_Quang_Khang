@@ -34,10 +34,10 @@ class Logo extends StatelessWidget {
           height: heightLogo,
         ),
         SizedBox(
-          width: 23.26,
+          width:10,
         ),
         Text(
-          "Scratch",
+          "scratch",
           style: Theme.of(context).textTheme.headline6?.copyWith(
               fontWeight: FontWeight.normal,
               fontFamily: 'Nunito-Bold',
