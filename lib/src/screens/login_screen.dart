@@ -301,197 +301,200 @@ class LoginScreen extends StatelessWidget {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(50, 50, 50, 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          LoginText.subTitleLogin,
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle1!
-                              .copyWith(
-                                  fontFamily: AppConstants.fontBold,
-                                  color: AppColors.subTitle,
-                                  fontSize: smallTextSize),
-                        ),
-                        SizedBox(
-                          height: spaceBetweenItems,
-                        ),
-                        Text(
-                          LoginText.email,
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle1!
-                              .copyWith(
-                                  fontFamily: AppConstants.fontBasic,
-                                  color: AppColors.fieldTitle,
-                                  fontSize: smallTextSize),
-                        ),
-                        BlocBuilder<UserBloc, UserState>(
-                          builder: (context, state) {
-                            checkLogIn(context, state);
-                            return TextField(
-                              keyboardType: TextInputType.emailAddress,
-                              autofocus: true,
-                              onChanged: (value) => _email = value,
-                              onSubmitted: (email) => context
-                                  .read<UserBloc>()
-                                  .add(UserEmailSubmitted(email)),
-                              cursorColor: AppColors.mainThemeColor,
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.only(
-                                    top: spaceBetweenTexts,
-                                    bottom: spaceBetweenTexts / 3),
-                                isDense: true,
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColors.mainThemeColor,
-                                    width: 2,
-                                  ),
-                                ),
-                                errorText: textEmailError,
-                              ),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1!
-                                  .copyWith(
-                                      fontFamily: AppConstants.fontBasic,
-                                      color: AppColors.fieldText,
-                                      fontSize: mediumTextSize),
-                            );
-                          },
-                        ),
-                        SizedBox(
-                          height: spaceBetweenItems,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              LoginText.password,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1!
-                                  .copyWith(
-                                      fontFamily: AppConstants.fontBasic,
-                                      color: AppColors.fieldTitle,
-                                      fontSize: smallTextSize),
-                            ),
-                            Text(
-                              LoginText.forgotPassword,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1!
-                                  .copyWith(
-                                      fontFamily: AppConstants.fontBold,
-                                      color: AppColors.fieldSubTitle,
-                                      fontSize: smallTextSize),
-                            ),
-                          ],
-                        ),
-                        BlocBuilder<UserBloc, UserState>(
-                          builder: (context, state) {
-                            return TextField(
-                              obscureText: true,
-                              obscuringCharacter: '●',
-                              onChanged: (value) => _password = value,
-                              onSubmitted: (password) => context
-                                  .read<UserBloc>()
-                                  .add(UserPasswordSubmitted(password)),
-                              cursorColor: AppColors.mainThemeColor,
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.only(
-                                    top: spaceBetweenTexts,
-                                    bottom: spaceBetweenTexts / 3),
-                                isDense: true,
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColors.mainThemeColor,
-                                    width: 2,
-                                  ),
-                                ),
-                                errorText: textPasswordError,
-                              ),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1!
-                                  .copyWith(
-                                    fontFamily: AppConstants.fontBasic,
-                                    color: AppColors.fieldText,
-                                    fontSize: mediumTextSize,
-                                  ),
-                            );
-                          },
-                        ),
-                        SizedBox(
-                          height: spaceBetweenItems,
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 50,
-                          child: TextButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  AppColors.mainThemeColor),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              )),
-                            ),
-                            onPressed: () => {},
-                            child: Text(
-                              LoginText.buttonLogin,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1!
-                                  .copyWith(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            LoginText.subTitleLogin,
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1!
+                                .copyWith(
                                     fontFamily: AppConstants.fontBold,
-                                    color: Colors.white,
-                                    fontSize: mediumTextSize,
-                                  ),
-                            ),
+                                    color: AppColors.subTitle,
+                                    fontSize: smallTextSize),
                           ),
-                        ),
-                        SizedBox(
-                          height: spaceBetweenItems,
-                        ),
-                        Center(
-                          child: Column(
+                          SizedBox(
+                            height: spaceBetweenItems,
+                          ),
+                          Text(
+                            LoginText.email,
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1!
+                                .copyWith(
+                                    fontFamily: AppConstants.fontBasic,
+                                    color: AppColors.fieldTitle,
+                                    fontSize: smallTextSize),
+                          ),
+                          BlocBuilder<UserBloc, UserState>(
+                            builder: (context, state) {
+                              checkLogIn(context, state);
+                              return TextField(
+                                keyboardType: TextInputType.emailAddress,
+                                autofocus: true,
+                                onChanged: (value) => _email = value,
+                                onSubmitted: (email) => context
+                                    .read<UserBloc>()
+                                    .add(UserEmailSubmitted(email)),
+                                cursorColor: AppColors.mainThemeColor,
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.only(
+                                      top: spaceBetweenTexts,
+                                      bottom: spaceBetweenTexts / 3),
+                                  isDense: true,
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppColors.mainThemeColor,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  errorText: textEmailError,
+                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .copyWith(
+                                        fontFamily: AppConstants.fontBasic,
+                                        color: AppColors.fieldText,
+                                        fontSize: mediumTextSize),
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            height: spaceBetweenItems,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                LoginText.subTitleSignUp,
+                                LoginText.password,
                                 style: Theme.of(context)
                                     .textTheme
                                     .subtitle1!
                                     .copyWith(
+                                        fontFamily: AppConstants.fontBasic,
+                                        color: AppColors.fieldTitle,
+                                        fontSize: smallTextSize),
+                              ),
+                              Text(
+                                LoginText.forgotPassword,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1!
+                                    .copyWith(
+                                        fontFamily: AppConstants.fontBold,
+                                        color: AppColors.fieldSubTitle,
+                                        fontSize: smallTextSize),
+                              ),
+                            ],
+                          ),
+                          BlocBuilder<UserBloc, UserState>(
+                            builder: (context, state) {
+                              return TextField(
+                                obscureText: true,
+                                obscuringCharacter: '●',
+                                onChanged: (value) => _password = value,
+                                onSubmitted: (password) => context
+                                    .read<UserBloc>()
+                                    .add(UserPasswordSubmitted(password)),
+                                cursorColor: AppColors.mainThemeColor,
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.only(
+                                      top: spaceBetweenTexts,
+                                      bottom: spaceBetweenTexts / 3),
+                                  isDense: true,
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppColors.mainThemeColor,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  errorText: textPasswordError,
+                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .copyWith(
                                       fontFamily: AppConstants.fontBasic,
-                                      color: AppColors.bottomTitle,
-                                      fontSize: smallTextSize,
+                                      color: AppColors.fieldText,
+                                      fontSize: mediumTextSize,
+                                    ),
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            height: spaceBetweenItems,
+                          ),
+                          SizedBox(
+                            width: double.infinity,
+                            height: 50,
+                            child: TextButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        AppColors.mainThemeColor),
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                )),
+                              ),
+                              onPressed: () => logIn(context),
+                              child: Text(
+                                LoginText.buttonLogin,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1!
+                                    .copyWith(
+                                      fontFamily: AppConstants.fontBold,
+                                      color: Colors.white,
+                                      fontSize: mediumTextSize,
                                     ),
                               ),
-                              SizedBox(
-                                height: spaceBetweenTexts / 3,
-                              ),
-                              TextButton(
-                                onPressed: () =>
-                                    Navigator.of(context).pushNamed('/signup'),
-                                child: Text(
-                                  LoginText.buttonSignUp,
+                            ),
+                          ),
+                          SizedBox(
+                            height: spaceBetweenItems,
+                          ),
+                          Center(
+                            child: Column(
+                              children: [
+                                Text(
+                                  LoginText.subTitleSignUp,
                                   style: Theme.of(context)
                                       .textTheme
                                       .subtitle1!
                                       .copyWith(
-                                        fontFamily: AppConstants.fontBold,
-                                        color: AppColors.mainThemeColor,
-                                        fontSize: mediumTextSize,
+                                        fontFamily: AppConstants.fontBasic,
+                                        color: AppColors.bottomTitle,
+                                        fontSize: smallTextSize,
                                       ),
                                 ),
-                              ),
-                            ],
+                                SizedBox(
+                                  height: spaceBetweenTexts / 3,
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.of(context)
+                                      .pushNamed('/signup'),
+                                  child: Text(
+                                    LoginText.buttonSignUp,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle1!
+                                        .copyWith(
+                                          fontFamily: AppConstants.fontBold,
+                                          color: AppColors.mainThemeColor,
+                                          fontSize: mediumTextSize,
+                                        ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
