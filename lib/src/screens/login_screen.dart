@@ -133,15 +133,20 @@ class LoginScreen extends StatelessWidget {
                                   color: AppColors.fieldTitle,
                                   fontSize: smallTextSize),
                         ),
-                        Text(
-                          LoginText.forgotPassword,
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle1!
-                              .copyWith(
-                                  fontFamily: AppConstants.fontBasic,
-                                  color: AppColors.fieldSubTitle,
-                                  fontSize: smallTextSize),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pushNamed('/forgot-password');
+                          },
+                          child: Text(
+                            LoginText.forgotPassword,
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1!
+                                .copyWith(
+                                    fontFamily: AppConstants.fontBasic,
+                                    color: AppColors.fieldSubTitle,
+                                    fontSize: smallTextSize),
+                          ),
                         ),
                       ],
                     ),
@@ -523,10 +528,10 @@ class LoginScreen extends StatelessWidget {
   void checkLogIn(BuildContext context, UserState state) {
     switch (state.runtimeType) {
       case UserEmailSubmitFailure:
-        textEmailError = LoginText.invalidEmail;
+        textEmailError = AppConstants.invalidEmail;
         break;
       case UserPasswordSubmitFailure:
-        textPasswordError = LoginText.invalidPassword;
+        textPasswordError = AppConstants.invalidPassword;
         break;
       case UserEmailSubmitSuccess:
         textEmailError = null;
@@ -534,8 +539,8 @@ class LoginScreen extends StatelessWidget {
       case UserPasswordSubmitSuccess:
         textPasswordError = null;
         break;
-      case UserLoginFailure:
-        state as UserLoginFailure;
+      case UserAuthFailure:
+        state as UserAuthFailure;
         if (state.exception.code == 'user-not-found') {
           textEmailError = LoginText.accountNotFound;
         } else if (state.exception.code == 'wrong-password') {

@@ -32,15 +32,40 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         break;
       case UserLoginButtonSubmitted:
         event as UserLoginButtonSubmitted;
-        yield UserLoginLoading();
+        yield UserLoading();
         try {
           await _user.auth.signInWithEmailAndPassword(
               email: event.email, password: event.password);
           yield UserLoginSuccess();
         } on FirebaseAuthException catch (exception) {
-          yield UserLoginFailure(exception);
+          yield UserAuthFailure(exception);
         }
         break;
+      case UserSignupButtonSubmitted:
+        event as UserSignupButtonSubmitted;
+        yield UserLoading();
+        if (Validators.isValidEmail(event.email) &&
+            Validators.isValidPassword(event.password)) {
+          try {
+            await _user.auth.createUserWithEmailAndPassword(
+                email: event.email, password: event.password);
+            yield UserSignUpSuccess();
+          } on FirebaseAuthException catch (exception) {
+            yield UserAuthFailure(exception);
+          }
+        }
+        break;
+      case UserForgotPasswordSubmitted:
+        event as UserEmailSubmitted;
+        yield UserLoading();
+        if (Validators.isValidEmail(event.email)) {
+          try {
+            await _user.auth.sendPasswordResetEmail(email: event.email);
+            yield UserSignUpSuccess();
+          } on FirebaseAuthException catch (exception) {
+            yield UserAuthFailure(exception);
+          }
+        }
     }
   }
 }

@@ -13,11 +13,12 @@ class ForgotPassword {
       "Enter the email associated with your account and we'll send and email with a link to reset your password.";
   static const String emailAddress = "Enail address";
   static const String buttonSend = "Send";
+  static const String titleHeadStartScratch = "Start from Sratch";
 }
 
 class SignUpText {
-  static const String titleStartMobile = "Start \nfrom Sratch";
-  static const String titleStartTablet = "Start from Sratch";
+  static const String titleStartMobile = "Start \nfrom Scratch";
+  static const String titleStartTablet = "Start from Scratch";
   static const String subTitleCreateAccount = "Create account continue";
   static const String fullName = "Full Name";
   static const String email = "Email";
@@ -25,6 +26,8 @@ class SignUpText {
   static const String buttonCreateAccount = "Create Acccount";
   static const String subtitleAlrHaveAcc = "Already have an account?";
   static const String subtitleLoginHere = "Login Here";
+  static const String existAccount =
+      "Account already exists. Please change guest account";
 }
 
 class LoginText {
@@ -36,14 +39,15 @@ class LoginText {
   static const String buttonLogin = "Login";
   static const String subTitleSignUp = "New to Scratch?";
   static const String buttonSignUp = "Create Account Here";
-  static const String invalidEmail = 'Invalid email';
-  static const String invalidPassword =
-      'Password should have more than 8 characters,\nincluding number, lower and upper character,\nand special symbol.';
   static const String accountNotFound = 'Account does not exist';
   static const String incorrectPassword = 'Incorrect password';
 }
 
 class AppConstants {
+  static const String invalidEmail = 'Invalid email';
+  static const String invalidPassword =
+      'Password should have more than 8 characters,\nincluding number, lower and upper character,\nand special symbol.';
+  static const String accountNotFound = 'Account does not exist';
   static const String fontBasic = "Nunito";
   static const String fontRegular = "Nunito-Reqular";
   static const String fontBlack = "Nunito-Black";

@@ -31,7 +31,7 @@ class UserPasswordSubmitSuccess extends UserState {
   List<Object> get props => [];
 }
 
-class UserLoginLoading extends UserState {
+class UserLoading extends UserState {
   @override
   List<Object> get props => [];
 }
@@ -40,10 +40,19 @@ class UserLoginSuccess extends UserState {
   @override
   List<Object> get props => [];
 }
+class UserSignUpSuccess extends UserState {
+  @override
+  List<Object> get props => [];
+}
 
-class UserLoginFailure extends UserState {
+class UserAuthFailure extends UserState {
   final FirebaseAuthException exception;
-  UserLoginFailure(this.exception);
+  UserAuthFailure(this.exception);
   @override
   List<Object> get props => [exception];
+}
+
+class UserForgotPasswordSuccess extends UserState {
+  @override
+  List<Object> get props => [];
 }
