@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mobile_app/src/blocs/bloc/signup_bloc.dart';
-import 'package:mobile_app/src/blocs/bloc/signup_event.dart';
-import 'package:mobile_app/src/blocs/bloc/signup_state.dart';
-import 'package:mobile_app/src/constants/constants_color.dart';
+import '../blocs/bloc/signup_event.dart';
+import '../blocs/bloc/signup_state.dart';
+import '../blocs/bloc/signup_bloc.dart';
+import '../constants/constants_color.dart';
 import '../widgets/responsive.dart';
 import '../widgets/logo.dart';
 import '../constants/constants_text.dart';

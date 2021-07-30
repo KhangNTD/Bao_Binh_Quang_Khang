@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mobile_app/src/respositories/user_repositories.dart';
-import 'package:mobile_app/util/validator.dart';
+import '../../respositories/user_repositories.dart';
+import '../../../util/validator.dart';
 
 import 'signup_event.dart';
 import 'signup_state.dart';
