@@ -6,7 +6,6 @@ import '../widgets/logo.dart';
 import '../widgets/responsive.dart';
 
 class OnboardingScreen extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     double widthsizebutton = 239;
@@ -70,7 +69,7 @@ class OnboardingScreen extends StatelessWidget {
                       colors: [
                     Colors.white,
                     Colors.white,
-                    Colors.white.withOpacity(1),
+                    Colors.white.withOpacity(0.9),
                     Colors.white.withOpacity(0.7),
                     Colors.white.withOpacity(0.6),
                   ])),
