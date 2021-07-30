@@ -15,7 +15,6 @@ class Responsive extends StatelessWidget {
 
   static bool isTablet(BuildContext context) =>
       MediaQuery.of(context).size.width >= 650;
-
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(

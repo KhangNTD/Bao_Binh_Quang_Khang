@@ -534,8 +534,8 @@ class LoginScreen extends StatelessWidget {
       case UserPasswordSubmitSuccess:
         textPasswordError = null;
         break;
-      case UserLoginFailure:
-        state as UserLoginFailure;
+      case UserAuthFailure:
+        state as UserAuthFailure;
         if (state.exception.code == 'user-not-found') {
           textEmailError = LoginText.accountNotFound;
         } else if (state.exception.code == 'wrong-password') {

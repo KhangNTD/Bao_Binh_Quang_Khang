@@ -16,8 +16,8 @@ class ForgotPassword {
 }
 
 class SignUpText {
-  static const String titleStartMobile = "Start \nfrom Sratch";
-  static const String titleStartTablet = "Start from Sratch";
+  static const String titleStartMobile = "Start \nfrom Scratch";
+  static const String titleStartTablet = "Start from Scratch";
   static const String subTitleCreateAccount = "Create account continue";
   static const String fullName = "Full Name";
   static const String email = "Email";
