@@ -17,10 +17,9 @@ class Logo extends StatelessWidget {
       alignmentText = MainAxisAlignment.center;
     }
     if (tabletScreen) {
-      widthLogo = 17;
-      heightLogo = 25;
+      widthLogo = 18;
+      heightLogo = 26;
       alignmentText = MainAxisAlignment.center;
-
     } else {
       widthLogo = 18;
       heightLogo = 26;
@@ -29,19 +28,21 @@ class Logo extends StatelessWidget {
       mainAxisAlignment: alignmentText,
       children: [
         Image(
-          image: AssetImage("assets/icons/logoicon.png"),
+          image: AssetImage("assets/icons/logo_icon.png"),
           width: widthLogo,
           height: heightLogo,
         ),
         SizedBox(
-          width:10,
+          width: 10,
         ),
         Text(
           "scratch",
           style: Theme.of(context).textTheme.headline6?.copyWith(
-              fontWeight: FontWeight.normal,
-              fontFamily: 'Nunito-Bold',
-              color: Color(0xff363837)),
+                fontWeight: FontWeight.normal,
+                fontFamily: 'Nunito-Bold',
+                color: Color(0xff363837),
+                fontSize: 20,
+              ),
         ),
       ],
     );
