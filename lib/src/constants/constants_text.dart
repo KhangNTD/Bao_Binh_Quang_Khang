@@ -29,7 +29,7 @@ class SignUpText {
 
 class LoginText {
   static const String titleWelcome = "Welcome Back!";
-  static const String subTitleLogin = "Please login to continue. ";
+  static const String subTitleLogin = "Please login to continue.";
   static const String email = "Email address";
   static const String password = "Password";
   static const String forgotPassword = "Forgot password?";
