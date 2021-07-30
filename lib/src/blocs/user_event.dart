@@ -34,3 +34,10 @@ class UserSignupButtonSubmitted extends UserEvent {
   @override
   List<Object> get props => [email, password];
 }
+
+class UserForgotPasswordSubmitted extends UserEvent {
+  final String email;
+  UserForgotPasswordSubmitted(this.email);
+  @override
+  List<Object> get props => [email];
+}

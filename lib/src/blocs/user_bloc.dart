@@ -54,6 +54,18 @@ class UserBloc extends Bloc<UserEvent, UserState> {
             yield UserAuthFailure(exception);
           }
         }
+        break;
+      case UserForgotPasswordSubmitted:
+        event as UserEmailSubmitted;
+        yield UserLoading();
+        if (Validators.isValidEmail(event.email)) {
+          try {
+            await _user.auth.sendPasswordResetEmail(email: event.email);
+            yield UserSignUpSuccess();
+          } on FirebaseAuthException catch (exception) {
+            yield UserAuthFailure(exception);
+          }
+        }
     }
   }
 }

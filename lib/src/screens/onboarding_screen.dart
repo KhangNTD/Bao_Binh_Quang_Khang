@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/responsive.dart';
-import '../constants/constants_text.dart';
 import '../constants/constants_color.dart';
+import '../constants/constants_text.dart';
 import '../widgets/logo.dart';
+import '../widgets/responsive.dart';
 
-class OnBoardingScreen extends StatelessWidget {
+class OnboardingScreen extends StatelessWidget {
+  const OnboardingScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     double widthsizebutton = 239;
@@ -111,8 +113,7 @@ class OnBoardingScreen extends StatelessWidget {
                     children: [
                       TextButton(
                         style: TextButton.styleFrom(
-                          backgroundColor:
-                              AppColors.mainThemeColor,
+                          backgroundColor: AppColors.mainThemeColor,
                           minimumSize: Size(widthsizebutton, heightsizebutton),
                         ),
                         onPressed: () {
@@ -145,8 +146,7 @@ class OnBoardingScreen extends StatelessWidget {
                                   .textTheme
                                   .button
                                   ?.copyWith(
-                                      color:
-                                          AppColors.mainThemeColor,
+                                      color: AppColors.mainThemeColor,
                                       fontFamily: AppConstants.fontBold)))
                     ],
                   ),

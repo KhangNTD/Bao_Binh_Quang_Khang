@@ -51,3 +51,8 @@ class UserAuthFailure extends UserState {
   @override
   List<Object> get props => [exception];
 }
+
+class UserForgotPasswordSuccess extends UserState {
+  @override
+  List<Object> get props => [];
+}

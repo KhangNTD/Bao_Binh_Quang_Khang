@@ -125,7 +125,7 @@ class BoxSignUp extends StatelessWidget {
                   Text(SignUpText.subTitleCreateAccount,
                       style: Theme.of(context).textTheme.subtitle1?.copyWith(
                             fontFamily: AppConstants.fontRegular,
-                            color: SignUp.buttonSignup,
+                            color: AppColors.mainThemeColor,
                             fontSize: 16,
                           )),
                   SizedBox(
@@ -290,10 +290,10 @@ class BoxSignUp extends StatelessWidget {
   void checkSignUp(BuildContext context, UserState state) {
     switch (state.runtimeType) {
       case UserEmailSubmitFailure:
-        textEmailError = LoginText.invalidEmail;
+        textEmailError = AppConstants.invalidEmail;
         break;
       case UserPasswordSubmitFailure:
-        textPasswordError = LoginText.invalidPassword;
+        textPasswordError = AppConstants.invalidPassword;
         break;
       case UserEmailSubmitSuccess:
         textEmailError = null;
