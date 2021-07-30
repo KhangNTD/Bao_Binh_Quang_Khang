@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_app/src/blocs/bloc/signup_bloc.dart';
 import 'package:mobile_app/src/blocs/bloc/signup_event.dart';
 import 'package:mobile_app/src/blocs/bloc/signup_state.dart';
+import 'package:mobile_app/src/constants/constants_color.dart';
 import '../widgets/responsive.dart';
 import '../widgets/logo.dart';
 import '../constants/constants_text.dart';
@@ -43,12 +44,12 @@ class SignUpScreen extends StatelessWidget {
                                   .subtitle1
                                   ?.copyWith(
                                       fontFamily: 'Nunito',
-                                      color: Color(0xff030F09),
+                                      color:  AppColor.titleColor,
                                       fontSize: 24)),
                         ],
                       ),
                     ),
-                    BoxSignUp(context)
+                    BoxSignUp()
                   ],
                 ),
                 tablet: Stack(
@@ -75,7 +76,7 @@ class SignUpScreen extends StatelessWidget {
                                 .subtitle1
                                 ?.copyWith(
                                     fontFamily: 'Nunito',
-                                    color: Color(0xff030F09),
+                                    color: AppColor.titleColor,
                                     fontSize: 24)),
                         SizedBox(
                           height: 30,
@@ -87,7 +88,7 @@ class SignUpScreen extends StatelessWidget {
                                     BorderRadius.all(Radius.circular(10))),
                             height: 500,
                             width: 475,
-                            child: BoxSignUp(context))
+                            child: BoxSignUp())
                       ],
                     ))
                   ],
@@ -104,13 +105,11 @@ class BoxSignUp extends StatelessWidget {
   final TextEditingController _passwordController = TextEditingController();
   bool isValidEmail = false;
   bool isValidPassword = false;
-  final BuildContext context;
-  BoxSignUp(this.context);
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignupBloc, SignupState>(
       builder: (context, state) {
-        signUp(state);
+        signUp(context, state);
         return Padding(
             padding: const EdgeInsets.fromLTRB(25, 20, 25, 0),
             child: Container(
@@ -120,7 +119,7 @@ class BoxSignUp extends StatelessWidget {
                   Text(SignUpText.subTitleCreateAccount,
                       style: Theme.of(context).textTheme.subtitle1?.copyWith(
                             fontFamily: 'Nunito',
-                            color: Color(0xff606060),
+                            color: SignUp.buttonSignup,
                             fontSize: 16,
                           )),
                   SizedBox(
@@ -133,15 +132,15 @@ class BoxSignUp extends StatelessWidget {
                         SignUpText.fullName,
                         style: Theme.of(context).textTheme.subtitle1?.copyWith(
                             fontFamily: 'Nunito',
-                            color: Color(0xffA8A8A8),
+                            color:  AppColor.formTextColor,
                             fontSize: 14),
                       ),
                       TextField(
-                        cursorColor: Color(0xff30BE76),
+                        cursorColor: AppColor.textWidth,
                         decoration: InputDecoration(
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color(0xff30BE76),
+                              color: AppColor.textWidth,
                               width: 2,
                             ),
                           ),
@@ -150,7 +149,7 @@ class BoxSignUp extends StatelessWidget {
                         ),
                         style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             fontFamily: 'Nunito',
-                            color: Color(0xff030F09),
+                            color: AppColor.titleColor,
                             fontSize: 16),
                       ),
                       SizedBox(height: 30),
@@ -160,39 +159,34 @@ class BoxSignUp extends StatelessWidget {
                               .subtitle1
                               ?.copyWith(
                                   fontFamily: 'Nunito',
-                                  color: Color(0xffA8A8A8),
+                                  color: AppColor.formTextColor,
                                   fontSize: 14)),
-                      
-                          TextField(
-                            controller: _emailController,
-                            cursorColor: Color(0xff30BE76),
-                            keyboardType: TextInputType.emailAddress,
-                            onSubmitted: (email) => context
-                                .read<SignupBloc>()
-                                .add(UserEmailSubmitted(email)),
-                            decoration: InputDecoration(
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0xff30BE76),
-                                  width: 2,
-                                ),
-                              ),
-                              contentPadding:
-                                  EdgeInsets.only(top: 15, bottom: 5),
-                              isDense: true,
-                              errorText: setErrorText(
-                                state,
-                                'mail',
-                              ),
+                      TextField(
+                        controller: _emailController,
+                        cursorColor: AppColor.textWidth,
+                        keyboardType: TextInputType.emailAddress,
+                        onSubmitted: (email) => context
+                            .read<SignupBloc>()
+                            .add(UserEmailSubmitted(email)),
+                        decoration: InputDecoration(
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: AppColor.textWidth,
+                              width: 2,
                             ),
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1!
-                                .copyWith(
-                                    fontFamily: 'Nunito',
-                                    color: Color(0xff030F09),
-                                    fontSize: 16),
                           ),
+                          contentPadding: EdgeInsets.only(top: 15, bottom: 5),
+                          isDense: true,
+                          errorText: setErrorText(
+                            state,
+                            'mail',
+                          ),
+                        ),
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            fontFamily: 'Nunito',
+                            color: AppColor.titleColor,
+                            fontSize: 16),
+                      ),
                       SizedBox(height: 30),
                       Text(SignUpText.password,
                           style: Theme.of(context)
@@ -200,41 +194,34 @@ class BoxSignUp extends StatelessWidget {
                               .subtitle1
                               ?.copyWith(
                                   fontFamily: 'Nunito',
-                                  color: Color(0xffA8A8A8),
+                                  color: AppColor.formTextColor,
                                   fontSize: 14)),
-                      
-                          
-                           TextField(
-                            controller: _passwordController,
-                            cursorColor: Color(0xff30BE76),
-                            obscureText: true,
-                            onSubmitted: (value) => context
-                                .read<SignupBloc>()
-                                .add(UserPasswordSubmitted(value)),
-                            decoration: InputDecoration(
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0xff30BE76),
-                                  width: 2,
-                                ),
-                              ),
-                              contentPadding:
-                                  EdgeInsets.only(top: 15, bottom: 5),
-                              isDense: true,
-                              errorText: setErrorText(
-                                state,
-                                'pass',
-                              ),
+                      TextField(
+                        controller: _passwordController,
+                        cursorColor: AppColor.textWidth,
+                        obscureText: true,
+                        onSubmitted: (value) => context
+                            .read<SignupBloc>()
+                            .add(UserPasswordSubmitted(value)),
+                        decoration: InputDecoration(
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: AppColor.textWidth,
+                              width: 2,
                             ),
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1!
-                                .copyWith(
-                                    fontFamily: 'Nunito',
-                                    color: Color(0xff030F09),
-                                    fontSize: 16),
                           ),
-                        
+                          contentPadding: EdgeInsets.only(top: 15, bottom: 5),
+                          isDense: true,
+                          errorText: setErrorText(
+                            state,
+                            'pass',
+                          ),
+                        ),
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            fontFamily: 'Nunito',
+                            color: AppColor.titleColor,
+                            fontSize: 16),
+                      ),
                     ],
                   ),
                   SizedBox(height: 30),
@@ -244,7 +231,7 @@ class BoxSignUp extends StatelessWidget {
                     child: TextButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(Color(0xff30BE76)),
+                            MaterialStateProperty.all<Color>(AppColor.textWidth),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
@@ -255,7 +242,7 @@ class BoxSignUp extends StatelessWidget {
                           UserSignupButtonSubmitted(
                               _emailController.text.trim(),
                               _passwordController.text)),
-                      // signUp(context),
+                      
                       child: Text(
                         SignUpText.buttonCreateAccount,
                         style: Theme.of(context).textTheme.subtitle1!.copyWith(
@@ -277,7 +264,7 @@ class BoxSignUp extends StatelessWidget {
                           style:
                               Theme.of(context).textTheme.subtitle1!.copyWith(
                                     fontFamily: 'Nunito',
-                                    color: Color(0xffA8A8A8),
+                                    color: AppColor.formTextColor,
                                     fontSize: 14,
                                   ),
                         ),
@@ -289,7 +276,7 @@ class BoxSignUp extends StatelessWidget {
                           style:
                               Theme.of(context).textTheme.subtitle1!.copyWith(
                                     fontFamily: 'Nunito-Bold',
-                                    color: Color(0xff30BE76),
+                                    color: AppColor.textWidth,
                                     fontSize: 16,
                                   ),
                         ),
@@ -317,16 +304,16 @@ class BoxSignUp extends StatelessWidget {
       isValidEmail = true;
     } else if (state is UserPasswordSubmitSuccess) {
       isValidPassword = true;
-    } else if (state is UserLoginFailure) {
+    } else if (state is UserSignupFailure) {
       return state.exception;
     }
     return null;
   }
 
-  void signUp( state) {
-    if (state is UserLoginSuccess) {
-      Navigator.pushReplacementNamed(context, '/login');
-      // Navigator.of(context).pushNmed('/login');
+  void signUp(BuildContext context, state) {
+    if (state is UserSignupSuccess) {
+      Future.delayed(Duration(seconds: 1),
+          () => Navigator.of(context).pushNamed('/login'));
     }
   }
 }

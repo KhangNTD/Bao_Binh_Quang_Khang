@@ -36,9 +36,9 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
           Validators.isValidPassword(event.password)) {
         try {
           await _userResponsitory.signUp(event.email, event.password);
-          yield UserLoginSuccess();
+          yield UserSignupSuccess();
         } on FirebaseAuthException catch (exception) {
-          yield UserLoginFailure(exception.toString());
+          yield UserSignupFailure(exception.toString());
         }
       }
     }

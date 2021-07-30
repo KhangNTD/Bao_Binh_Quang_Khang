@@ -35,14 +35,14 @@ class UserSignupLoading extends SignupState {
 }
 
 
-class UserLoginSuccess extends SignupState {
+class UserSignupSuccess extends SignupState {
   @override
   List<Object> get props => [];
 }
 
-class UserLoginFailure extends SignupState {
+class UserSignupFailure extends SignupState {
   final String exception;
-  UserLoginFailure(this.exception);
+  UserSignupFailure(this.exception);
   @override
   List<Object> get props => [exception];
 }
