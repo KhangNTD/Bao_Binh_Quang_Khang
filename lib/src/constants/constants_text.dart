@@ -7,13 +7,7 @@ class OnBoarding {
   static const String buttonLearnMore = "Learn more";
 }
 
-class ForgotPassword {
-  static const String titleResetPassword = "Reset password";
-  static const String subtitleResetPassword =
-      "Enter the email associated with your account and we'll send and email with a link to reset your password.";
-  static const String emailAddress = "Enail address";
-  static const String buttonSend = "Send";
-}
+class ForgotPassword {}
 
 class SignUpText {
   static const String titleStartMobile = "Start \nfrom Scratch";
@@ -42,7 +36,6 @@ class LoginText {
   static const String accountNotFound = 'Account does not exist';
   static const String incorrectPassword = 'Incorrect password';
 }
-
 class AppConstants {
   static const String fontBasic = "Nunito";
   static const String fontRegular = "Nunito-Reqular";
