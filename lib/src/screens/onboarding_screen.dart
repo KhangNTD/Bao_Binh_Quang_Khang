@@ -6,15 +6,15 @@ import '../widgets/logo.dart';
 import '../widgets/responsive.dart';
 
 class OnboardingScreen extends StatelessWidget {
-  const OnboardingScreen({Key? key}) : super(key: key);
-
+  
   @override
   Widget build(BuildContext context) {
     double widthsizebutton = 239;
     double heightsizebutton = 50;
-    Color mainSectionColor = Colors.white;
-    double mainSectionSpacing = 8;
-
+    double spacingLogoWithAppBar = 80;
+    double spacingTitleWithSubTitle = 8;
+    double spacingSubTitleWithButton = 34;
+    double spacingButton = 20;
     return Responsive(
       mobile: Container(
         height: double.infinity,
@@ -36,14 +36,13 @@ class OnboardingScreen extends StatelessWidget {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                    mainSectionColor,
-                    mainSectionColor.withOpacity(1),
-                    mainSectionColor.withOpacity(1),
-                    mainSectionColor.withOpacity(0.5),
-                    mainSectionColor.withOpacity(0.5),
+                    Colors.white,
+                    Colors.white,
+                    Colors.white,
+                    Colors.white.withOpacity(0.5),
+                    Colors.white.withOpacity(0.5),
                   ])),
               height: double.infinity,
-              // width: double.infinity,
               child: Logo(
                 onboardingScreen: true,
                 tabletScreen: false,
@@ -57,7 +56,7 @@ class OnboardingScreen extends StatelessWidget {
         decoration: BoxDecoration(
             image: DecorationImage(
           image: AssetImage('assets/images/backgroundloading.png'),
-          alignment: Alignment(0, 1.8),
+          alignment: Alignment(0, 1.1),
           fit: BoxFit.none,
           scale: 0.7,
         )),
@@ -69,16 +68,16 @@ class OnboardingScreen extends StatelessWidget {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                    mainSectionColor,
-                    mainSectionColor.withOpacity(1),
-                    mainSectionColor.withOpacity(1),
-                    mainSectionColor.withOpacity(0.7),
-                    mainSectionColor.withOpacity(0.6),
+                    Colors.white,
+                    Colors.white,
+                    Colors.white.withOpacity(1),
+                    Colors.white.withOpacity(0.7),
+                    Colors.white.withOpacity(0.6),
                   ])),
               child: Column(
                 children: [
                   SizedBox(
-                    height: mainSectionSpacing * 10,
+                    height: spacingLogoWithAppBar,
                   ),
                   Logo(
                     onboardingScreen: true,
@@ -95,7 +94,7 @@ class OnboardingScreen extends StatelessWidget {
                         fontFamily: AppConstants.fontSemiBold),
                   ),
                   SizedBox(
-                    height: mainSectionSpacing,
+                    height: spacingTitleWithSubTitle,
                   ),
                   Text(
                     OnBoarding.subtitleOnBoarding,
@@ -106,7 +105,7 @@ class OnboardingScreen extends StatelessWidget {
                         color: AppColors.fieldTitle),
                   ),
                   SizedBox(
-                    height: mainSectionSpacing * 4.25,
+                    height: spacingSubTitleWithButton,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -122,13 +121,13 @@ class OnboardingScreen extends StatelessWidget {
                         child: Text(
                           OnBoarding.buttonJoinScracth,
                           style: Theme.of(context).textTheme.button?.copyWith(
-                                color: mainSectionColor,
+                                color: Colors.white,
                                 fontFamily: AppConstants.fontBold,
                               ),
                         ),
                       ),
                       SizedBox(
-                        width: mainSectionSpacing * 2.5,
+                        width: spacingButton,
                       ),
                       OutlinedButton(
                           style: OutlinedButton.styleFrom(

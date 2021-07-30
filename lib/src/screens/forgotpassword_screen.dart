@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mobile_app/src/blocs/user_bloc.dart';
-import 'package:mobile_app/src/blocs/user_event.dart';
-import 'package:mobile_app/src/blocs/user_state.dart';
-// import 'package:mobile_app/src/repositories/user_repositories.dart';
 
+import '../blocs/user_bloc.dart';
+import '../blocs/user_event.dart';
+import '../blocs/user_state.dart';
 import '../constants/constants_color.dart';
 import '../widgets/logo.dart';
 import '../constants/constants_text.dart';
 import '../widgets/responsive.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
-  // final _email = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,7 +106,6 @@ class BoxResetPassword extends StatefulWidget {
 }
 
 class _BoxResetPasswordState extends State<BoxResetPassword> {
-  // final _email = TextEditingController();
   dynamic textEmailError;
   String _email = '';
   @override
@@ -176,7 +173,6 @@ class _BoxResetPasswordState extends State<BoxResetPassword> {
             builder: (context, state) {
               checkForgotPassword(context, state);
               return TextField(
-                // controller: _email,
                 keyboardType: TextInputType.emailAddress,
                 autofocus: true,
                 onChanged: (value) => _email = value,
@@ -191,16 +187,12 @@ class _BoxResetPasswordState extends State<BoxResetPassword> {
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: AppColors.mainThemeColor,
-                      // color: checkColor(true) == true
-                      //     ? AppColors.mainThemeColor
-                      //     : Colors.red,
                       width: 2,
                     ),
                   ),
                 ),
                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
                     fontFamily: AppConstants.fontRegular,
-                    // color: AppColors.fieldTitle,
                     fontSize: 16.5),
               );
             },
@@ -216,9 +208,6 @@ class _BoxResetPasswordState extends State<BoxResetPassword> {
                       borderRadius: BorderRadius.circular(8))),
               onPressed: () {
                 forgotPassword(context);
-                // context.read<UserBloc>().add(SubmitEmail(_email.text));
-                // sendMess();
-                // auth.sendPasswordResetEmail(email: _email.text);
               },
               child: Text(
                 ForgotPassword.buttonSend,
@@ -238,7 +227,7 @@ class _BoxResetPasswordState extends State<BoxResetPassword> {
     }
   }
 
-  void checkForgotPassword(BuildContext context, UserState state) {
+  checkForgotPassword(BuildContext context, UserState state) {
     switch (state.runtimeType) {
       case UserEmailSubmitFailure:
         textEmailError = AppConstants.invalidEmail;
